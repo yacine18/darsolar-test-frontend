@@ -47,13 +47,12 @@ const UpdateCompany = () => {
     e.preventDefault();
     try {
       const BASE_API_URL = process.env.BASE_API_URL || "http://localhost:3001";
-      const { data } = await axios.patch(`${BASE_API_URL}/api/companies/${id}`, {
+      await axios.patch(`${BASE_API_URL}/api/companies/${id}`, {
         name,
         logo,
         phone,
         city,
       });
-      console.log(data);
       router.push("/");
     } catch (error) {
       setError(getError(error));

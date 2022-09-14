@@ -16,8 +16,6 @@ const AddCompany = () => {
   const [city, setCity] = useState("");
   const [error, setError] = useState("");
 
-  console.log(logo)
-
   const router = useRouter();
 
   // handle file change in the logo input
@@ -29,7 +27,7 @@ const AddCompany = () => {
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post(`${BASE_API_URL}/api/companies`, {
+      await axios.post(`${BASE_API_URL}/api/companies`, {
         name,
         logo,
         phone,
@@ -39,7 +37,6 @@ const AddCompany = () => {
           "Content-Type": "multipart/form-data"
         }
       });
-      console.log(data)
       router.push("/");
     } catch (error) {
       setError(getError(error));
