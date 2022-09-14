@@ -28,10 +28,7 @@ const CompaniesList = () => {
 
   const deleteCompany = async (id: string) => {
     try {
-      const { data } = await axios.delete(
-        `${BASE_API_URL}/api/companies/${id}`
-      );
-      console.log(data.message);
+      await axios.delete(`${BASE_API_URL}/api/companies/${id}`);
 
       // update state after deleting a company
       setCompanies((prevCompanies) =>
@@ -94,7 +91,7 @@ const CompaniesList = () => {
                       </th>
                       <td className="py-4 px-6">
                         <img
-                          src={`${BASE_API_URL}/${company?.logo}`}
+                          src={`${BASE_API_URL}/uploads/${company?.logo}`}
                           alt={company.name}
                           width="50"
                         />
