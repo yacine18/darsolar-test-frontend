@@ -4,10 +4,9 @@ import Head from "next/head";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { Company } from "../interfaces/Company";
+import { BASE_API_URL } from "../utils/apiUrl";
 import { getError } from "../utils/error";
 import ErrorAlerts from "./ErrorAlerts";
-
-const BASE_API_URL = process.env.BASE_API_URL || "http://localhost:3001";
 
 const CompaniesList = () => {
   const [companies, setCompanies] = useState([]);
@@ -93,7 +92,7 @@ const CompaniesList = () => {
                         <img
                           src={`${BASE_API_URL}/uploads/${company?.logo}`}
                           alt={company.name}
-                          width="50"
+                          width="100"
                         />
                       </td>
                       <td className="py-4 px-6">

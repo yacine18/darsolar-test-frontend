@@ -6,6 +6,7 @@ import ErrorAlerts from "../../components/ErrorAlerts";
 import { getError } from "../../utils/error";
 import axios from "axios";
 import { Company } from "../../interfaces/Company";
+import { BASE_API_URL } from "../../utils/apiUrl";
 
 const UpdateCompany = () => {
   const [company, setCompany] = useState<Company>();
@@ -21,15 +22,13 @@ const UpdateCompany = () => {
   useEffect(() => {
     const fetchCompany = async () => {
       try {
-        const BASE_API_URL =
-          process.env.BASE_API_URL || "http://localhost:3001";
         const { data } = await axios.get(`${BASE_API_URL}/api/companies/${id}`);
-        
+
         setCompany(data.company);
-        setName(data.company.name)
-        setLogo(data.company.logo)
-        setPhone(data.company.phone)
-        setCity(data.company.city)
+        setName(data.company.name);
+        setLogo(data.company.logo);
+        setPhone(data.company.phone);
+        setCity(data.company.city);
       } catch (error) {
         setError(getError(error));
       }
@@ -38,21 +37,29 @@ const UpdateCompany = () => {
     fetchCompany();
   }, [id]);
 
+  // handle file change in the logo input
   const changeFileHandler = (e: any) => {
     setLogo(e.target.files[0]);
-    setFilename(e.target.files[0].name)
+    setFilename(e.target.files[0].name);
   };
 
-  const handleSubmit = async (e: { preventDefault: () => void }) => {
+  const handleSubmit = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     try {
-      const BASE_API_URL = process.env.BASE_API_URL || "http://localhost:3001";
-      await axios.patch(`${BASE_API_URL}/api/companies/${id}`, {
-        name,
-        logo,
-        phone,
-        city,
-      });
+      await axios.patch(
+        `${BASE_API_URL}/api/companies/${id}`,
+        {
+          name,
+          logo,
+          phone,
+          city,
+        },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
       router.push("/");
     } catch (error) {
       setError(getError(error));
@@ -65,7 +72,7 @@ const UpdateCompany = () => {
         <title>{`Update ${company && company?.name}`}</title>
       </Head>
       <h1 className="mx-auto px-3 py-6 text-center mt-3 text-3xl">
-      {`Update ${company && company?.name}`}
+        {`Update ${company && company?.name}`}
       </h1>
       {error && <ErrorAlerts>{error}</ErrorAlerts>}
       <form
