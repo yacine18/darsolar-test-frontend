@@ -41,7 +41,7 @@ const CompaniesList = () => {
   return (
     <>
       <Head>
-        <title>Companies - Darsolar</title>
+        <title>Companies List - Darsolar</title>
       </Head>
       <div className="container overflow-x-auto relative mx-auto py-12 mt-32 sm:rounded-lg px-6 py-6">
         <Link href="/new-company">
